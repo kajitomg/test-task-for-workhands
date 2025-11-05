@@ -6,7 +6,7 @@ import { cn } from '@/utils/cn';
 
 interface Props {
   locale?: string
-  date?: Date
+  date?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {})

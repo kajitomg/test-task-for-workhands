@@ -7,7 +7,7 @@ interface CalendarOptions {
 
 const useCalendar = (
   initLocale: string = 'ru-RU',
-  initDate?: Date,
+  initDate?: string,
   options: CalendarOptions = {
     range: 100
   }
@@ -17,8 +17,8 @@ const useCalendar = (
   const locale = ref(initLocale)
   const range = ref(options.range)
   
-  const date = ref(initDate || new Date())
-  const today = ref(initDate || new Date())
+  const date = ref(initDate ? new Date(initDate) : new Date())
+  const today = ref(initDate ? new Date(initDate) : new Date())
   const selected = ref<Date>()
   
   const firstDay = computed(() => Calendar.getFirstDayOfWeek(locale.value))

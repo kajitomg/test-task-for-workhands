@@ -5,6 +5,6 @@ import { Calendar } from '@/components/calendar';
 
 <template>
   <main>
-    <Calendar/>
+    <Calendar date='2025-12-20' locale='en-US'/>
   </main>
 </template>
