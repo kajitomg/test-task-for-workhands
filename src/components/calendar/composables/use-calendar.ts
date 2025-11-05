@@ -7,7 +7,7 @@ interface CalendarOptions {
 
 const useCalendar = (
   initLocale: string = 'ru-RU',
-  initDate: Date = new Date(),
+  initDate?: Date,
   options: CalendarOptions = {
     range: 100
   }
@@ -17,8 +17,8 @@ const useCalendar = (
   const locale = ref(initLocale)
   const range = ref(options.range)
   
-  const date = ref(initDate)
-  const today = ref(new Date())
+  const date = ref(initDate || new Date())
+  const today = ref(initDate || new Date())
   const selected = ref<Date>()
   
   const firstDay = computed(() => Calendar.getFirstDayOfWeek(locale.value))
@@ -37,6 +37,7 @@ const useCalendar = (
   }
   const handleSelectDay = (item: Day) => {
     selected.value = new Date(item.year,item.monthIndex, item.value)
+    return selected.value
   }
   
   const scheduleNextUpdate = (ref: Ref<Date, Date>, update: number | 'midnight')=> {
@@ -56,13 +57,15 @@ const useCalendar = (
     }, timeout)
   }
   
-  onMounted(() => {
-    timeoutId.value = scheduleNextUpdate(today, 'midnight')
-  })
-  
-  onUnmounted(() => {
-    clearTimeout(timeoutId.value)
-  })
+  if (!initDate) {
+    onMounted(() => {
+      timeoutId.value = scheduleNextUpdate(today, 'midnight')
+    })
+    
+    onUnmounted(() => {
+      clearTimeout(timeoutId.value)
+    })
+  }
   
   return { locale, date, today, selected, years, months, weeks, days, handleNextMonth, handlePrevMonth, handleSelectDay }
 }

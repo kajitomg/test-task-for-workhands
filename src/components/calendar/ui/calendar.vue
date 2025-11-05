@@ -4,7 +4,14 @@ import { Button } from '@/components/button';
 import { useCalendar } from '@/components/calendar/composables/use-calendar';
 import { cn } from '@/utils/cn';
 
-const calendar = useCalendar();
+interface Props {
+  locale?: string
+  date?: Date
+}
+
+const props = withDefaults(defineProps<Props>(), {})
+
+const calendar = useCalendar(props.locale, props.date);
 </script>
 
 <template>
